@@ -76,6 +76,7 @@
         methods: {
             setSeeking(event) {
                 this.seeking = true
+                if(event.event.event && event.event.event.touches)
                 this.duration = event.event.event.touches[0].clientY / event.event.event.target.clientHeight
             },
             removeSeeking(event) {

@@ -8,9 +8,11 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "css-doodle": "^0.7.2",
     "lightning": "github:Zaiyiiiiii/Lightning",
     "lodash": "^4.17.15",
     "register-service-worker": "^1.6.2",
+    "rxjs": "^6.5.3",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vue2-touch-events": "^2.0.0",
