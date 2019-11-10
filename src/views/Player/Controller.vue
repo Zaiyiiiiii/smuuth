@@ -1,19 +1,21 @@
 <template>
     <div
         class="controller"
-        v-touch:horizontalMoves="setBars"
+        v-touch:horizontalMoves.stop="setBars"
     >
         <transition name="panel">
             <div
                 class="controller-panel"
                 v-if="showPanel"
-            ></div>
+            >
+                <volume class="controller-volume"></volume>
+            </div>
         </transition>
         <div
             class="controller-progress"
             v-touch:verticalMoves="setSeeking"
             v-touch:verticalMoveEnds="removeSeeking"
-            :style="{width: seeking?'20px':''}"
+            :class="{'controller-progress-seeking': seeking}"
         >
             <div
                 class="controller-progress-done"
@@ -33,16 +35,34 @@
         height: 100%;
         display: flex;
         justify-content: flex-end;
+        font-size: 20px;
+    }
+    .controller-volume {
+        background-color: currentColor;
+        /* width: 12.5vw; */
+        /* height: 32vw; */
+        width: 52px;
+        height: 135px;
+        margin-top: 10px;
+    }
+    .controller-volume-button {
+        color: #fff;
     }
     .controller-progress {
         position: relative;
         background: #fff;
-        width: 10px;
+        width: 6px;
         height: 100%;
         transition: all 0.3s;
+        border-radius: 10px 0 0 10px;
+        overflow: hidden;
+    }
+    .controller-progress-seeking {
+        width: 20px;
+        border-radius: 0;
     }
     .controller-progress-done {
-        background: #000;
+        background: currentColor;
         position: absolute;
         top: 0;
         left: 0;
@@ -51,13 +71,14 @@
     }
     .controller-panel {
         height: 100%;
-        width: 65px;
-        background: rgba(0, 0, 0, 0.2);
+        /* box-shadow: rgba(100, 100, 100, 0.2) -5px 0 5px 0px; */
         transition: all 0.3s;
+        margin-right: 7px;
     }
 </style>
 <script>
     import { scan, take, throttleTime } from "rxjs/operators"
+    import Volume from "../../components/VolumeButton"
     export default {
         events: {
             touching(event) {
@@ -66,18 +87,21 @@
         eventFlows: {
             touching(flow) { }
         },
+        components: {
+            volume: Volume
+        },
         data() {
             return {
                 seeking: false,
-                showPanel: false,
+                showPanel: true,
                 duration: 0.5
             }
         },
         methods: {
             setSeeking(event) {
                 this.seeking = true
-                if(event.event.event && event.event.event.touches)
-                this.duration = event.event.event.touches[0].clientY / event.event.event.target.clientHeight
+                if (event.event.event && event.event.event.touches)
+                    this.duration = event.event.event.touches[0].clientY / event.event.event.target.clientHeight
             },
             removeSeeking(event) {
                 console.log(event)

@@ -8,7 +8,14 @@
         </transition>
     </div>
 </template>
-
+<script>
+import { Salads } from "./lib/Salad/main"
+export default {
+    mounted() {
+        this.$store.state.salads = Salads
+    },
+}
+</script>
 <style>
     @keyframes appin {
         from {
@@ -31,10 +38,12 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
-        color: #2c3e50;
+        /* color: #2c3e50; */
+        color: #130B3F;
         width: 100%;
         height: 100%;
         animation: appin 0.5s;
+        overflow: hidden;
     }
     .route-enter-active,
     .route-leave-active {

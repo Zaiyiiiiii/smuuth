@@ -1,16 +1,19 @@
 
 import Vue from "vue"
 import { fromEvent, timer, empty, Observable } from "rxjs"
-import {  first, elementAt, filter, map, tap, merge, catchError, concatMap, takeUntil } from "rxjs/operators"
+import { first, elementAt, filter, map, tap, merge, catchError, concatMap, takeUntil } from "rxjs/operators"
 
 export const touch = {
     install: () => {
         Vue.directive("touch", {
             bind: (el, binding) => {
                 const { throttleTime } = require('rxjs/operators')
+                let ob = getDragObservables(el, binding.modifiers)
                 console.log(binding)
-                let ob = getDragObservables(el)
-                ob[binding.arg].pipe(...(Object.keys(binding.modifiers || {}).map(item => eval(item)))).subscribe(value => binding.value(value))
+                const supportArgs = Object.keys(binding.modifiers).filter(arg => {
+                    return arg.match(/throttleTime\([1-9][0-9]*\)/)
+                }).map(item => eval(item))
+                ob[binding.arg].pipe(...supportArgs).subscribe(value => binding.value(value))
             }
         })
     }
@@ -18,19 +21,28 @@ export const touch = {
 Vue.use(touch)
 
 
-export function getDragObservables(domItem) {
+export function getDragObservables(domItem, modifiers) {
     const preventDefault = event => {
         if (event.target.tagName !== "INPUT" && event.target.tagName !== "TEXTAREA") event.preventDefault();
+        if (modifiers.stop) {
+            event.stopPropagation();
+        }
     }
     const mouseEventToCoordinate = mouseEvent => {
         preventDefault(mouseEvent);
+        if (modifiers.stop) {
+            mouseEvent.stopPropagation();
+        }
         return { x: mouseEvent.clientX, y: mouseEvent.clientY, event: mouseEvent };
     };
     const touchEventToCoordinate = touchEvent => {
         preventDefault(touchEvent);
+        if (modifiers.stop) {
+            touchEvent.stopPropagation();
+        }
         return { x: touchEvent.changedTouches[0].clientX, y: touchEvent.changedTouches[0].clientY, event: touchEvent };
     };
-    console.log(fromEvent)
+    // console.log(fromEvent)
     let mouseDowns = fromEvent(domItem, "mousedown").pipe(map(mouseEventToCoordinate))  //, tap(() => console.log('mouse down'))
     let mouseMoves = fromEvent(window, "mousemove").pipe(map(mouseEventToCoordinate))   //, tap(() => console.log('mouse move'))
     let mouseUps = fromEvent(window, "mouseup").pipe(map(mouseEventToCoordinate))   //, tap(() => console.log('mouse up'))
