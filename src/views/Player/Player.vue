@@ -11,8 +11,8 @@
 
         </div>
         <controller class="player-controller"></controller>
-        <main class="main">
-        </main>
+        <pmain class="main">
+        </pmain>
         <div class="sub"></div>
 
     </div>
@@ -93,7 +93,8 @@
             }, 1000)
         },
         components: {
-            controller: controller
+            controller: controller,
+            pmain: main
         },
         methods: {
             mainSwipe(event) {

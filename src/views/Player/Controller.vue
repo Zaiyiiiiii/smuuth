@@ -27,8 +27,8 @@
 <style scoped>
     .panel-leave-to,
     .panel-enter {
-        transform: translateX(10px);
-        opacity: 0;
+        transform: translateX(70px);
+        opacity: 0
     }
     .controller {
         width: 100%;
