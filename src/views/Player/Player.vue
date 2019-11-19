@@ -112,16 +112,13 @@
                 this.draggie = new Draggabilly(this.$el, {
                     axis: "x",
                     handle: "*"
-                    // containment: true
                 })
-                console.log(this.draggie)
                 let x0 = 0, x1 = 0, noMove = false
 
                 this.draggie.on("dragStart", (event) => {
                     x0 = event.x
                     if (event.path.includes(this.$refs.controller.$el) && this.$refs.controller.showPanel) {
                         noMove = true
-                        console.info("set Nomove")
                         event.stopPropagation()                        
                     }
                     else {
