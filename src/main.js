@@ -5,6 +5,8 @@ import './registerServiceWorker'
 import store from './store/store'
 import Lightning from "lightning/src/Lightning"
 import { touch } from './touch'
+import eruda from "eruda"
+// eruda.init()
 
 Vue.config.productionTip = false
 

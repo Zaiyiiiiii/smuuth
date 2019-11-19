@@ -63,7 +63,8 @@ export function getDragObservables(domItem, modifiers) {
         concatMap(dragStartEvent =>
             _ends.pipe(
                 first(),
-                takeUntil(_moves.elementAt(3)),
+                takeUntil(_moves),
+                elementAt(3),
                 takeUntil(timer(HOLDING_PERIOD)),
                 // tap(() => console.log('click')),
                 catchError(err => empty()))
@@ -73,7 +74,8 @@ export function getDragObservables(domItem, modifiers) {
         concatMap(dragStartEvent =>
             Observable.pipe(
                 timer(HOLDING_PERIOD),
-                takeUntil(_moves.elementAt(3)),
+                takeUntil(_moves),
+                selementAt(3),
                 takeUntil(_ends),
                 map(() => ({ x: dragStartEvent.x, y: dragStartEvent.y, event: dragStartEvent })),
                 // tap(() => console.log('hold')),
@@ -121,7 +123,7 @@ export function getDragObservables(domItem, modifiers) {
             }));
 
     let verticalMoves = verticalMoveStarts.pipe(concatMap(movesUntilEnds), tap(() => console.log('vertical move')));
-    let horizontalMoves = horizontalMoveStarts.pipe(concatMap(movesUntilEnds), tap(() => console.log('horizontal move')));
+    let horizontalMoves = horizontalMoveStarts.pipe(concatMap(movesUntilEnds), tap((x) => { }));//console.log('horizontal move', x)
     let dragMoves = holds.pipe(concatMap(movesUntilEnds), tap(() => console.log('dragging')));
 
     const lastMovesAtEnds = dragStartEvent =>
@@ -135,8 +137,8 @@ export function getDragObservables(domItem, modifiers) {
             }));
 
     let ends = _starts.pipe(concatMap(lastMovesAtEnds));
-    let verticalMoveEnds = verticalMoveStarts.pipe(concatMap(lastMovesAtEnds), tap(() => console.log('vertical move end')));
-    let horizontalMoveEnds = horizontalMoveStarts.pipe(concatMap(lastMovesAtEnds), tap(() => console.log('horizontal move end')));
+    let verticalMoveEnds = verticalMoveStarts.pipe(concatMap(lastMovesAtEnds), tap(() => { }));//console.log('vertical move end')
+    let horizontalMoveEnds = horizontalMoveStarts.pipe(concatMap(lastMovesAtEnds), tap((x) => { }));//console.log('horizontal move end',x)
     let dragMoveEnds = holds.pipe(concatMap(lastMovesAtEnds), tap(() => console.log('dragging end')));
 
     return {

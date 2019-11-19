@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Player from '../src/views/Player/Player'
 import Login from '../src/views/Login'
+import Playlists from '../src/views/Player/Playlists'
 
 Vue.use(Router)
 
@@ -15,7 +16,23 @@ export default new Router({
     },
     {
       path: "/player",
-      component: Player
+      component: Player,
+      redirect: "/player/songlists",
+      children: [
+        {
+          name: "playlists",
+          path: "/player/playlists",
+          component: Playlists
+        },
+        {
+          name: "fm",
+          path: "/player/fm"
+        },
+        {
+          name: "settings",
+          path: "/player/settings"
+        }
+      ]
     },
     {
       path: "/login",

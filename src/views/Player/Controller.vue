@@ -2,6 +2,7 @@
     <div
         class="controller"
         v-touch:horizontalMoves.stop="setBars"
+        :class="{'controller-show': showPanel}"
     >
         <transition name="panel">
             <div
@@ -28,7 +29,7 @@
     .panel-leave-to,
     .panel-enter {
         transform: translateX(70px);
-        opacity: 0
+        opacity: 0;
     }
     .controller {
         width: 100%;

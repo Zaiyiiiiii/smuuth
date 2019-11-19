@@ -7,6 +7,6 @@ module.exports = {
                 pathRewrite: {'^/api/netease' : ''},
                 changeOrigin: true
             }
-        }
+        }        
     }
 }
