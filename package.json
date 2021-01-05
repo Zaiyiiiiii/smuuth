@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "NeteaseCloudMusicApi": "github:Binaryify/NeteaseCloudMusicApi",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "core-js": "^2.6.5",
     "css-doodle": "^0.7.2",
     "draggabilly": "^2.2.0",
