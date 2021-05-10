@@ -14,7 +14,7 @@
     "draggabilly": "^2.2.0",
     "eruda": "^1.10.3",
     "lightning": "github:Zaiyiiiiii/Lightning",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "pouchdb": "^7.1.1",
     "register-service-worker": "^1.6.2",
     "rxjs": "^6.5.3",
